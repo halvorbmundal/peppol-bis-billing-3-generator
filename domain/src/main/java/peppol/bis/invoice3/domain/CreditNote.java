@@ -80,6 +80,15 @@ public class CreditNote extends BillingCommon<CreditNote> implements XmlRootElem
         return this;
     }
 
+    /**
+     * Writes {@code cbc:PaymentDueDate} as a child of the {@code CreditNote} root element.
+     *
+     * @deprecated the UBL CreditNote document type has no document level due date element, so this
+     * produces documents that are rejected by the Peppol validation. The due date (BT-9) of a credit
+     * note is stated as {@code cac:PaymentMeans/cbc:PaymentDueDate}, use
+     * {@link PaymentMeans#withPaymentDueDate(String)} instead.
+     */
+    @Deprecated
     public CreditNote withPaymentDueDate(String paymentDueDate) {
         this.paymentDueDate = paymentDueDate;
         return this;
