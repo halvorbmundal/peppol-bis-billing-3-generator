@@ -48,7 +48,6 @@ public class CreditNote extends BillingCommon<CreditNote> implements XmlRootElem
     private TaxRepresentativeParty taxRepresentativeParty;
     private Delivery delivery;
     private final List<XmlElement> paymentMeans = new ArrayList<>();
-    private String paymentDueDate;
     private PaymentTerms paymentTerms;
     private final List<XmlElement> allowanceCharges = new ArrayList<>();
     private final List<XmlElement> taxTotals = new ArrayList<>();
@@ -77,20 +76,6 @@ public class CreditNote extends BillingCommon<CreditNote> implements XmlRootElem
 
     public CreditNote withBuyerReference(String buyerReference) {
         this.buyerReference = buyerReference;
-        return this;
-    }
-
-    /**
-     * Writes {@code cbc:PaymentDueDate} as a child of the {@code CreditNote} root element.
-     *
-     * @deprecated the UBL CreditNote document type has no document level due date element, so this
-     * produces documents that are rejected by the Peppol validation. The due date (BT-9) of a credit
-     * note is stated as {@code cac:PaymentMeans/cbc:PaymentDueDate}, use
-     * {@link PaymentMeans#withPaymentDueDate(String)} instead.
-     */
-    @Deprecated
-    public CreditNote withPaymentDueDate(String paymentDueDate) {
-        this.paymentDueDate = paymentDueDate;
         return this;
     }
 
@@ -225,7 +210,6 @@ public class CreditNote extends BillingCommon<CreditNote> implements XmlRootElem
         optional(this.taxRepresentativeParty, elm);
         optional(this.delivery, elm);
         list(this.paymentMeans, elm);
-        optional(this.paymentDueDate, "PaymentDueDate", elm, CBC_NS);
         optional(this.paymentTerms, elm);
         list(this.allowanceCharges, elm);
         list(this.taxTotals, elm);
